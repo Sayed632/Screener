@@ -4,29 +4,25 @@ import json
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
-import matplotlib.pyplot as plt
 
-# Smart Environment Resolver: Checks GitHub/OS Environment first, falls back to Google Colab secrets
+# Smart Environment Resolver
 def get_secret(key):
-    # Try reading directly from OS environment variables (GitHub Actions)
     val = os.environ.get(key)
     if val:
         return val
-    # Fallback to Google Colab Userdata if running interactively
     try:
         from google.colab import userdata
         return userdata.get(key)
     except ImportError:
         return None
 
-# 1. Credentials Configuration Resolution
 TELEGRAM_TOKEN = get_secret('TELEGRAM_TOKEN')
 MY_CHAT_ID = get_secret('MY_CHAT_ID')
 SCREENER_USERNAME = get_secret('SCREENER_USERNAME')
 SCREENER_PASSWORD = get_secret('SCREENER_PASSWORD')
 
 if not all([TELEGRAM_TOKEN, MY_CHAT_ID, SCREENER_USERNAME, SCREENER_PASSWORD]):
-    print("❌ Secret resolution failed. Ensure your Environment Keys or Colab Secrets are populated.")
+    print("❌ Secret resolution failed.")
     exit(1)
 
 SCREENER_URLS = [
@@ -36,7 +32,6 @@ SCREENER_URLS = [
 
 HISTORY_FILE = "holdings_history.json"
 
-# Load past data baseline to detect delta changes
 if os.path.exists(HISTORY_FILE) and os.path.getsize(HISTORY_FILE) > 0:
     with open(HISTORY_FILE, "r") as f:
         try:
@@ -46,7 +41,6 @@ if os.path.exists(HISTORY_FILE) and os.path.getsize(HISTORY_FILE) > 0:
 else:
     historical_db = {}
 
-# 2. Authentication and Scraping Layers
 def get_screener_session():
     session = requests.Session()
     login_url = "https://www.screener.in/login/"
@@ -98,9 +92,12 @@ def parse_shareholding_metrics(session, company_url):
     headers = [th.text.strip() for th in table.find('thead').find_all('th')]
     latest_idx = len(headers) - 1
     
-    metrics = {'Promoters': 0.0, 'FIIs': 0.0, 'DIIs': 0.0, 'Public': 0.0}
-    for row in table.find('tbody').find_all('tr'):
+    metrics = {'Promoters': 0.0, 'FIIs': 0.0, 'DIIs': 0.0, 'Public': 0.0, 'Top_Holders': []}
+    
+    # 1. Grab Main Categories
+    for row in table.find('tbody', class_='').find_all('tr', class_=''):
         cols = row.find_all('td')
+        if not cols: continue
         cat = cols[0].text.strip().replace('+', '').strip()
         if cat in metrics:
             try:
@@ -108,33 +105,49 @@ def parse_shareholding_metrics(session, company_url):
                 metrics[cat] = float(val) if val else 0.0
             except:
                 continue
+                
+    # 2. Extract Hidden Institutional Sub-Holders (Deep Scan)
+    for sub_row in table.select("tbody tr.sub"):
+        cols = sub_row.find_all('td')
+        if len(cols) >= latest_idx + 1:
+            holder_name = cols[0].text.strip()
+            try:
+                holder_val = cols[latest_idx].text.strip().replace('%', '')
+                if holder_val and float(holder_val) > 0.0:
+                    metrics['Top_Holders'].append(f"{holder_name} ({holder_val}%)")
+            except:
+                continue
+                
     return metrics
 
-# 3. Delta Variance Analysis Logic Engine
 def calculate_delta_signals(stock_name, current_metrics):
     past = historical_db.get(stock_name, {})
     if not past:
-        return "🆕 *Added to Tracking Watchlist*"
+        return "🆕 *Added to Tracking Watchlist*", True
     
     updates = []
-    for key in ['Promoters', 'FIIs', 'DIIs']:
+    has_changed = False
+    for key in ['Promoters', 'FIIs', 'DIIs', 'Public']:
         old_val = past.get(key, 0.0)
         new_val = current_metrics.get(key, 0.0)
         diff = round(new_val - old_val, 2)
         
         if diff > 0:
-            updates.append(f"🟢 *{key}*: {new_val}% (+{diff}%)")
+            updates.append(f"🟢 {key}: {new_val}% (+{diff}%)")
+            has_changed = True
         elif diff < 0:
-            updates.append(f"🔴 *{key}*: {new_val}% ({diff}%)")
+            updates.append(f"🔴 {key}: {new_val}% ({diff}%)")
+            has_changed = True
+        else:
+            updates.append(f"⚫ {key}: {new_val}% (0.0%)")
             
-    return "\n".join(updates) if updates else "🔄 _No shareholding pattern changes detected_"
+    return "\n".join(updates), has_changed
 
 def broadcast_telegram_payload(msg):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     payload = {'chat_id': MY_CHAT_ID, 'text': msg, 'parse_mode': 'Markdown'}
     requests.post(url, data=payload)
 
-# 4. Main Controller Pipeline Run
 def main():
     print("🔐 Starting secure Screener login sequence...")
     session = get_screener_session()
@@ -150,27 +163,32 @@ def main():
         metrics = parse_shareholding_metrics(session, details['url'])
         if not metrics: continue
         
-        delta_report_string = calculate_delta_signals(name, metrics)
+        delta_report_string, has_changed = calculate_delta_signals(name, metrics)
         
+        # Format Top Holders list safely
+        holders_list = "\n".join([f"  • _{h}_" for h in metrics['Top_Holders']]) if metrics['Top_Holders'] else "  _No institutional major holders declared_"
+        
+        # Structural Layout
         tele_msg = (
-            f"📊 *Stock Alert: {name}*\n"
+            f"📊 *Stock Report: {name}*\n"
             f"💰 Price: ₹{details['price']}\n"
             f"🔗 [Screener Profile]({details['url']})\n\n"
-            f"*Shareholding Profile Analysis:*\n{delta_report_string}"
+            f"*Shareholding Activity Summary:*\n"
+            f"{delta_report_string}\n\n"
+            f"*Identified Institutional Investors:*\n"
+            f"{holders_list}"
         )
         
-        # Notify if something changes or it's a freshly scraped tracking addition
-        if "🔄" not in delta_report_string:
+        # Send on brand new additions OR when an institutional shift triggers
+        if has_changed or name not in historical_db:
             broadcast_telegram_payload(tele_msg)
-            print(f"🚀 Alert sent for {name}")
+            print(f"🚀 Telegram update sent for {name}")
             
         updated_history_snapshot[name] = metrics
 
-    # Overwrite tracking snapshot baseline file
     with open(HISTORY_FILE, "w") as f:
         json.dump(updated_history_snapshot, f, indent=4)
     print("💾 Analysis database sync complete.")
 
 if __name__ == "__main__":
     main()
-  
