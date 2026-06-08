@@ -8,9 +8,17 @@ on:
 jobs:
   build_and_run:
     runs-on: ubuntu-latest
+    
+    # 🔐 CRITICAL FIX: Explicitly grant write permissions to the automation token
+    permissions:
+      contents: write
+
     steps:
     - name: Checkout Code Repository
       uses: actions/checkout@v3
+      with:
+        # Uses the default token with the write permissions specified above
+        token: ${{ secrets.GITHUB_TOKEN }} 
 
     - name: Set Up Python Environment
       uses: actions/setup-python@v4
@@ -38,4 +46,3 @@ jobs:
         git add holdings_history.json
         git commit -m "Sync updated holding pattern tracking cache [skip ci]" || exit 0
         git push
-        
