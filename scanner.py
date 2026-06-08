@@ -94,22 +94,16 @@ def parse_shareholding_metrics(session, company_url):
     
     metrics = {'Promoters': 0.0, 'FIIs': 0.0, 'DIIs': 0.0, 'Public': 0.0, 'Top_Holders': []}
     
-    # 1. Grab Main Categories
-    for row in table.find('tbody', class_='').find_all('tr', class_=''):
+    # Safely get all rows inside the table body
+    tbody = table.find('tbody')
+    if not tbody: return None
+    
+    for row in tbody.find_all('tr'):
         cols = row.find_all('td')
         if not cols: continue
-        cat = cols[0].text.strip().replace('+', '').strip()
-        if cat in metrics:
-            try:
-                val = cols[latest_idx].text.strip().replace('%', '')
-                metrics[cat] = float(val) if val else 0.0
-            except:
-                continue
-                
-    # 2. Extract Hidden Institutional Sub-Holders (Deep Scan)
-    for sub_row in table.select("tbody tr.sub"):
-        cols = sub_row.find_all('td')
-        if len(cols) >= latest_idx + 1:
+        
+        # Check if it is a hidden sub-row for institutional holders
+        if 'class' in row.attrs and 'sub' in row.attrs['class']:
             holder_name = cols[0].text.strip()
             try:
                 holder_val = cols[latest_idx].text.strip().replace('%', '')
@@ -117,6 +111,15 @@ def parse_shareholding_metrics(session, company_url):
                     metrics['Top_Holders'].append(f"{holder_name} ({holder_val}%)")
             except:
                 continue
+        else:
+            # It's a core main category row
+            cat = cols[0].text.strip().replace('+', '').strip()
+            if cat in metrics:
+                try:
+                    val = cols[latest_idx].text.strip().replace('%', '')
+                    metrics[cat] = float(val) if val else 0.0
+                except:
+                    continue
                 
     return metrics
 
@@ -160,15 +163,17 @@ def main():
     updated_history_snapshot = {}
     
     for name, details in active_screener_matches.items():
-        metrics = parse_shareholding_metrics(session, details['url'])
-        if not metrics: continue
+        try:
+            metrics = parse_shareholding_metrics(session, details['url'])
+            if not metrics: continue
+        except Exception as e:
+            print(f"⚠️ Error parsing shareholding for {name}: {e}. Skipping...")
+            continue
         
         delta_report_string, has_changed = calculate_delta_signals(name, metrics)
         
-        # Format Top Holders list safely
         holders_list = "\n".join([f"  • _{h}_" for h in metrics['Top_Holders']]) if metrics['Top_Holders'] else "  _No institutional major holders declared_"
         
-        # Structural Layout
         tele_msg = (
             f"📊 *Stock Report: {name}*\n"
             f"💰 Price: ₹{details['price']}\n"
@@ -179,7 +184,6 @@ def main():
             f"{holders_list}"
         )
         
-        # Send on brand new additions OR when an institutional shift triggers
         if has_changed or name not in historical_db:
             broadcast_telegram_payload(tele_msg)
             print(f"🚀 Telegram update sent for {name}")
@@ -192,3 +196,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
