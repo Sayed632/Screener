@@ -48,13 +48,6 @@
         "Public": 40.36,
         "Top_Holders": []
     },
-    "Almondz Global": {
-        "Promoters": 51.18,
-        "FIIs": 0.02,
-        "DIIs": 0.12,
-        "Public": 48.67,
-        "Top_Holders": []
-    },
     "DU Digital": {
         "Promoters": 54.03,
         "FIIs": 11.77,
@@ -127,34 +120,6 @@
         "Public": 24.44,
         "Top_Holders": []
     },
-    "Netweb Technol.": {
-        "Promoters": 66.98,
-        "FIIs": 9.29,
-        "DIIs": 4.68,
-        "Public": 19.03,
-        "Top_Holders": []
-    },
-    "Prudent Corp.": {
-        "Promoters": 55.31,
-        "FIIs": 14.89,
-        "DIIs": 23.58,
-        "Public": 6.21,
-        "Top_Holders": []
-    },
-    "Inventurus Knowl": {
-        "Promoters": 63.72,
-        "FIIs": 8.19,
-        "DIIs": 6.4,
-        "Public": 19.39,
-        "Top_Holders": []
-    },
-    "Bharat Electron": {
-        "Promoters": 51.14,
-        "FIIs": 19.51,
-        "DIIs": 20.0,
-        "Public": 9.37,
-        "Top_Holders": []
-    },
     "Fujiyama Power": {
         "Promoters": 86.76,
         "FIIs": 1.93,
@@ -162,18 +127,25 @@
         "Public": 5.7,
         "Top_Holders": []
     },
-    "Polycab India": {
-        "Promoters": 61.5,
-        "FIIs": 18.21,
-        "DIIs": 7.95,
-        "Public": 12.33,
+    "CRISIL": {
+        "Promoters": 66.64,
+        "FIIs": 7.18,
+        "DIIs": 12.61,
+        "Public": 13.57,
         "Top_Holders": []
     },
-    "Saatvik Green": {
-        "Promoters": 75.99,
-        "FIIs": 0.03,
-        "DIIs": 10.52,
-        "Public": 13.46,
+    "Apar Inds.": {
+        "Promoters": 57.77,
+        "FIIs": 9.38,
+        "DIIs": 24.15,
+        "Public": 8.71,
+        "Top_Holders": []
+    },
+    "SML Mahindra": {
+        "Promoters": 58.97,
+        "FIIs": 0.77,
+        "DIIs": 1.56,
+        "Public": 38.71,
         "Top_Holders": []
     },
     "Krishna Defence": {
@@ -183,11 +155,25 @@
         "Public": 37.37,
         "Top_Holders": []
     },
-    "International Ge": {
-        "Promoters": 76.55,
-        "FIIs": 8.6,
-        "DIIs": 6.38,
-        "Public": 8.46,
+    "Engineers India": {
+        "Promoters": 51.32,
+        "FIIs": 9.66,
+        "DIIs": 12.19,
+        "Public": 26.79,
+        "Top_Holders": []
+    },
+    "HCL Technologies": {
+        "Promoters": 60.86,
+        "FIIs": 15.51,
+        "DIIs": 18.95,
+        "Public": 4.36,
+        "Top_Holders": []
+    },
+    "Anthem Bioscienc": {
+        "Promoters": 74.67,
+        "FIIs": 1.28,
+        "DIIs": 11.55,
+        "Public": 12.48,
         "Top_Holders": []
     },
     "Hexaware Tech.": {
@@ -197,11 +183,11 @@
         "Public": 6.18,
         "Top_Holders": []
     },
-    "Fiem Industries": {
-        "Promoters": 54.51,
-        "FIIs": 6.86,
-        "DIIs": 11.4,
-        "Public": 27.22,
+    "Transrail Light": {
+        "Promoters": 71.12,
+        "FIIs": 2.17,
+        "DIIs": 8.14,
+        "Public": 18.58,
         "Top_Holders": []
     },
     "Yash Highvoltage": {
@@ -211,18 +197,11 @@
         "Public": 30.96,
         "Top_Holders": []
     },
-    "Dr Lal Pathlabs": {
-        "Promoters": 53.21,
-        "FIIs": 17.18,
-        "DIIs": 21.37,
-        "Public": 7.88,
-        "Top_Holders": []
-    },
-    "Sky Gold & Diam.": {
-        "Promoters": 51.74,
-        "FIIs": 1.2,
-        "DIIs": 13.14,
-        "Public": 33.91,
+    "Sudeep Pharma": {
+        "Promoters": 76.16,
+        "FIIs": 1.55,
+        "DIIs": 18.11,
+        "Public": 4.18,
         "Top_Holders": []
     },
     "Stylam Industrie": {
@@ -246,18 +225,11 @@
         "Public": 25.77,
         "Top_Holders": []
     },
-    "Interarch Build.": {
-        "Promoters": 59.44,
-        "FIIs": 5.29,
-        "DIIs": 5.17,
-        "Public": 30.12,
-        "Top_Holders": []
-    },
-    "Coromandel Inter": {
-        "Promoters": 56.35,
-        "FIIs": 13.02,
-        "DIIs": 18.19,
-        "Public": 12.24,
+    "KSH Internationa": {
+        "Promoters": 74.58,
+        "FIIs": 5.05,
+        "DIIs": 13.89,
+        "Public": 6.47,
         "Top_Holders": []
     }
 }
