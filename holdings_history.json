@@ -48,15 +48,6 @@
         "Public": 40.36,
         "Top_Holders": []
     },
-    "DU Digital": {
-        "Promoters": 54.03,
-        "FIIs": 11.77,
-        "DIIs": 0.0,
-        "Public": 34.2,
-        "Top_Holders": [
-            "No. of Shareholders (670%)"
-        ]
-    },
     "C C C L": {
         "Promoters": 60.05,
         "FIIs": 0.04,
@@ -120,11 +111,60 @@
         "Public": 24.44,
         "Top_Holders": []
     },
+    "Netweb Technol.": {
+        "Promoters": 66.98,
+        "FIIs": 9.29,
+        "DIIs": 4.68,
+        "Public": 19.03,
+        "Top_Holders": []
+    },
+    "Prudent Corp.": {
+        "Promoters": 55.31,
+        "FIIs": 14.89,
+        "DIIs": 23.58,
+        "Public": 6.21,
+        "Top_Holders": []
+    },
+    "Inventurus Knowl": {
+        "Promoters": 63.72,
+        "FIIs": 8.19,
+        "DIIs": 6.4,
+        "Public": 19.39,
+        "Top_Holders": []
+    },
+    "Bharat Electron": {
+        "Promoters": 51.14,
+        "FIIs": 19.51,
+        "DIIs": 20.0,
+        "Public": 9.37,
+        "Top_Holders": []
+    },
     "Fujiyama Power": {
         "Promoters": 86.76,
         "FIIs": 1.93,
         "DIIs": 5.6,
         "Public": 5.7,
+        "Top_Holders": []
+    },
+    "Polycab India": {
+        "Promoters": 61.5,
+        "FIIs": 18.21,
+        "DIIs": 7.95,
+        "Public": 12.33,
+        "Top_Holders": []
+    },
+    "Premier Energies": {
+        "Promoters": 63.94,
+        "FIIs": 5.72,
+        "DIIs": 13.69,
+        "Public": 16.28,
+        "Top_Holders": []
+    },
+    "Saatvik Green": {
+        "Promoters": 75.99,
+        "FIIs": 0.03,
+        "DIIs": 10.52,
+        "Public": 13.46,
         "Top_Holders": []
     },
     "CRISIL": {
@@ -134,32 +174,11 @@
         "Public": 13.57,
         "Top_Holders": []
     },
-    "Apar Inds.": {
-        "Promoters": 57.77,
-        "FIIs": 9.38,
-        "DIIs": 24.15,
-        "Public": 8.71,
-        "Top_Holders": []
-    },
     "SML Mahindra": {
         "Promoters": 58.97,
         "FIIs": 0.77,
         "DIIs": 1.56,
         "Public": 38.71,
-        "Top_Holders": []
-    },
-    "Krishna Defence": {
-        "Promoters": 59.96,
-        "FIIs": 0.61,
-        "DIIs": 2.06,
-        "Public": 37.37,
-        "Top_Holders": []
-    },
-    "Engineers India": {
-        "Promoters": 51.32,
-        "FIIs": 9.66,
-        "DIIs": 12.19,
-        "Public": 26.79,
         "Top_Holders": []
     },
     "HCL Technologies": {
@@ -169,20 +188,6 @@
         "Public": 4.36,
         "Top_Holders": []
     },
-    "Anthem Bioscienc": {
-        "Promoters": 74.67,
-        "FIIs": 1.28,
-        "DIIs": 11.55,
-        "Public": 12.48,
-        "Top_Holders": []
-    },
-    "Hexaware Tech.": {
-        "Promoters": 74.3,
-        "FIIs": 4.2,
-        "DIIs": 15.04,
-        "Public": 6.18,
-        "Top_Holders": []
-    },
     "Transrail Light": {
         "Promoters": 71.12,
         "FIIs": 2.17,
@@ -190,11 +195,11 @@
         "Public": 18.58,
         "Top_Holders": []
     },
-    "Yash Highvoltage": {
-        "Promoters": 57.94,
-        "FIIs": 0.05,
-        "DIIs": 11.06,
-        "Public": 30.96,
+    "R R Kabel": {
+        "Promoters": 61.65,
+        "FIIs": 9.1,
+        "DIIs": 13.33,
+        "Public": 15.91,
         "Top_Holders": []
     },
     "Sudeep Pharma": {
@@ -204,11 +209,11 @@
         "Public": 4.18,
         "Top_Holders": []
     },
-    "Stylam Industrie": {
-        "Promoters": 54.1,
-        "FIIs": 2.81,
-        "DIIs": 13.31,
-        "Public": 29.78,
+    "Thangamayil Jew.": {
+        "Promoters": 61.61,
+        "FIIs": 4.37,
+        "DIIs": 17.41,
+        "Public": 16.61,
         "Top_Holders": []
     },
     "ASK Automotive": {
@@ -218,11 +223,39 @@
         "Public": 5.52,
         "Top_Holders": []
     },
-    "Skipper": {
-        "Promoters": 66.5,
-        "FIIs": 6.07,
-        "DIIs": 1.66,
-        "Public": 25.77,
+    "Kwality Pharma": {
+        "Promoters": 54.87,
+        "FIIs": 2.79,
+        "DIIs": 0.36,
+        "Public": 41.99,
+        "Top_Holders": []
+    },
+    "ICRA": {
+        "Promoters": 51.86,
+        "FIIs": 7.92,
+        "DIIs": 24.51,
+        "Public": 15.41,
+        "Top_Holders": []
+    },
+    "Interarch Build.": {
+        "Promoters": 59.44,
+        "FIIs": 5.29,
+        "DIIs": 5.17,
+        "Public": 30.12,
+        "Top_Holders": []
+    },
+    "Coromandel Inter": {
+        "Promoters": 56.35,
+        "FIIs": 13.02,
+        "DIIs": 18.19,
+        "Public": 12.24,
+        "Top_Holders": []
+    },
+    "ICICI Lombard": {
+        "Promoters": 51.28,
+        "FIIs": 22.29,
+        "DIIs": 19.41,
+        "Public": 6.9,
         "Top_Holders": []
     },
     "KSH Internationa": {
