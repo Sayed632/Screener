@@ -4,21 +4,24 @@
         "FIIs": 0.05,
         "DIIs": 0.0,
         "Public": 38.05,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Nila Infrastruct": {
         "Promoters": 61.9,
         "FIIs": 0.34,
         "DIIs": 0.0,
         "Public": 37.75,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Anlon Healthcare": {
         "Promoters": 52.68,
         "FIIs": 0.32,
         "DIIs": 4.6,
         "Public": 42.4,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Bhatia Communic.": {
         "Promoters": 71.22,
@@ -32,167 +35,439 @@
         "FIIs": 2.03,
         "DIIs": 0.49,
         "Public": 32.62,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Globe Intl. Car.": {
         "Promoters": 63.49,
         "FIIs": 0.02,
         "DIIs": 0.0,
         "Public": 36.49,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Sagility": {
         "Promoters": 50.95,
         "FIIs": 10.02,
         "DIIs": 22.28,
         "Public": 16.75,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "R&B Denims": {
         "Promoters": 57.38,
         "FIIs": 2.07,
         "DIIs": 0.18,
         "Public": 40.36,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Almondz Global": {
         "Promoters": 51.18,
         "FIIs": 0.02,
         "DIIs": 0.12,
         "Public": 48.67,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "C C C L": {
         "Promoters": 60.05,
         "FIIs": 0.04,
         "DIIs": 8.93,
         "Public": 30.98,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "ICICI AMC": {
         "Promoters": 87.59,
         "FIIs": 2.4,
         "DIIs": 7.18,
         "Public": 2.82,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "GE Power": {
         "Promoters": 68.58,
         "FIIs": 1.26,
         "DIIs": 1.13,
         "Public": 28.65,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "GE Vernova T&D": {
         "Promoters": 51.0,
         "FIIs": 20.39,
         "DIIs": 21.39,
         "Public": 7.22,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Tenneco Clean": {
         "Promoters": 74.79,
         "FIIs": 8.94,
         "DIIs": 12.58,
         "Public": 3.69,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "I R C T C": {
         "Promoters": 62.4,
         "FIIs": 4.86,
         "DIIs": 14.86,
         "Public": 17.88,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Garden Reach Sh.": {
         "Promoters": 74.5,
         "FIIs": 3.51,
         "DIIs": 1.69,
         "Public": 20.32,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Cummins India": {
         "Promoters": 51.0,
         "FIIs": 20.77,
         "DIIs": 19.43,
         "Public": 8.68,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Waaree Energies": {
         "Promoters": 64.19,
         "FIIs": 7.06,
         "DIIs": 4.32,
         "Public": 24.44,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Inventurus Knowl": {
         "Promoters": 63.72,
         "FIIs": 8.19,
         "DIIs": 6.4,
         "Public": 19.39,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Saatvik Green": {
         "Promoters": 75.99,
         "FIIs": 0.03,
         "DIIs": 10.52,
         "Public": 13.46,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Engineers India": {
         "Promoters": 51.32,
         "FIIs": 9.66,
         "DIIs": 12.19,
         "Public": 26.79,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Hexaware Tech.": {
         "Promoters": 74.3,
         "FIIs": 4.2,
         "DIIs": 15.04,
         "Public": 6.18,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Aditya Infotech": {
         "Promoters": 74.75,
         "FIIs": 5.72,
         "DIIs": 14.75,
         "Public": 4.78,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Transrail Light": {
         "Promoters": 71.12,
         "FIIs": 2.17,
         "DIIs": 8.14,
         "Public": 18.58,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "R R Kabel": {
         "Promoters": 61.65,
         "FIIs": 9.1,
         "DIIs": 13.33,
         "Public": 15.91,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Thangamayil Jew.": {
         "Promoters": 61.61,
         "FIIs": 4.37,
         "DIIs": 17.41,
         "Public": 16.61,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "Kwality Pharma": {
         "Promoters": 54.87,
         "FIIs": 2.79,
         "DIIs": 0.36,
         "Public": 41.99,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     },
     "KSH Internationa": {
         "Promoters": 74.58,
         "FIIs": 5.05,
         "DIIs": 13.89,
         "Public": 6.47,
-        "Top_Holders": []
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Prudent Corp.": {
+        "Promoters": 55.31,
+        "FIIs": 14.89,
+        "DIIs": 23.58,
+        "Public": 6.21,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Bharat Electron": {
+        "Promoters": 51.14,
+        "FIIs": 19.51,
+        "DIIs": 20.0,
+        "Public": 9.37,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Fujiyama Power": {
+        "Promoters": 86.76,
+        "FIIs": 1.93,
+        "DIIs": 5.6,
+        "Public": 5.7,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Premier Energies": {
+        "Promoters": 63.94,
+        "FIIs": 5.72,
+        "DIIs": 13.69,
+        "Public": 16.28,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Polycab India": {
+        "Promoters": 61.5,
+        "FIIs": 18.21,
+        "DIIs": 7.95,
+        "Public": 12.33,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "CRISIL": {
+        "Promoters": 66.64,
+        "FIIs": 7.18,
+        "DIIs": 12.61,
+        "Public": 13.57,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Apar Inds.": {
+        "Promoters": 57.77,
+        "FIIs": 9.38,
+        "DIIs": 24.15,
+        "Public": 8.71,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "SML Mahindra": {
+        "Promoters": 58.97,
+        "FIIs": 0.77,
+        "DIIs": 1.56,
+        "Public": 38.71,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Krishna Defence": {
+        "Promoters": 59.96,
+        "FIIs": 0.61,
+        "DIIs": 2.06,
+        "Public": 37.37,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "International Ge": {
+        "Promoters": 76.55,
+        "FIIs": 8.6,
+        "DIIs": 6.38,
+        "Public": 8.46,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "HCL Technologies": {
+        "Promoters": 60.86,
+        "FIIs": 15.51,
+        "DIIs": 18.95,
+        "Public": 4.36,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Anthem Bioscienc": {
+        "Promoters": 74.67,
+        "FIIs": 1.28,
+        "DIIs": 11.55,
+        "Public": 12.48,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Fiem Industries": {
+        "Promoters": 54.51,
+        "FIIs": 6.86,
+        "DIIs": 11.4,
+        "Public": 27.22,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Hitachi Energy": {
+        "Promoters": 71.31,
+        "FIIs": 11.68,
+        "DIIs": 6.95,
+        "Public": 10.07,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Yash Highvoltage": {
+        "Promoters": 57.94,
+        "FIIs": 0.05,
+        "DIIs": 11.06,
+        "Public": 30.96,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Rubicon Research": {
+        "Promoters": 59.86,
+        "FIIs": 7.54,
+        "DIIs": 10.02,
+        "Public": 22.57,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Dr Lal Pathlabs": {
+        "Promoters": 53.21,
+        "FIIs": 17.18,
+        "DIIs": 21.37,
+        "Public": 7.88,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Sudeep Pharma": {
+        "Promoters": 76.16,
+        "FIIs": 1.55,
+        "DIIs": 18.11,
+        "Public": 4.18,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Sky Gold & Diam.": {
+        "Promoters": 51.74,
+        "FIIs": 1.2,
+        "DIIs": 13.14,
+        "Public": 33.91,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Stylam Industrie": {
+        "Promoters": 54.1,
+        "FIIs": 2.81,
+        "DIIs": 13.31,
+        "Public": 29.78,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Shringar House": {
+        "Promoters": 74.8,
+        "FIIs": 5.77,
+        "DIIs": 1.53,
+        "Public": 17.88,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "ASK Automotive": {
+        "Promoters": 74.95,
+        "FIIs": 9.29,
+        "DIIs": 10.25,
+        "Public": 5.52,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Jain Resource": {
+        "Promoters": 73.59,
+        "FIIs": 3.02,
+        "DIIs": 10.04,
+        "Public": 13.28,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Supriya Lifesci.": {
+        "Promoters": 68.3,
+        "FIIs": 5.16,
+        "DIIs": 5.7,
+        "Public": 20.83,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "DOMS Industries": {
+        "Promoters": 70.38,
+        "FIIs": 7.62,
+        "DIIs": 19.14,
+        "Public": 2.86,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Skipper": {
+        "Promoters": 66.5,
+        "FIIs": 6.07,
+        "DIIs": 1.66,
+        "Public": 25.77,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "ICRA": {
+        "Promoters": 51.86,
+        "FIIs": 7.92,
+        "DIIs": 24.51,
+        "Public": 15.41,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Interarch Build.": {
+        "Promoters": 59.44,
+        "FIIs": 5.29,
+        "DIIs": 5.17,
+        "Public": 30.12,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Coromandel Inter": {
+        "Promoters": 56.35,
+        "FIIs": 13.02,
+        "DIIs": 18.19,
+        "Public": 12.24,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "ICICI Lombard": {
+        "Promoters": 51.28,
+        "FIIs": 22.29,
+        "DIIs": 19.41,
+        "Public": 6.9,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
+    },
+    "Vijaya Diagnost.": {
+        "Promoters": 52.51,
+        "FIIs": 13.38,
+        "DIIs": 29.93,
+        "Public": 4.17,
+        "Top_Holders": [],
+        "Order_Book": "N/A"
     }
 }
