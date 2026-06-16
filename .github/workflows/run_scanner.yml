@@ -2,32 +2,32 @@ name: Run Screener Automated Sync
 
 on:
   schedule:
-    - cron: '30 12 * * 1-5'
-  workflow_dispatch:
+    - cron: '30 12 * * 1-5'  # Runs Monday to Friday at 6:00 PM IST (12:30 PM UTC)
+  workflow_dispatch:        # Allows manual run execution from the Actions panel
 
 jobs:
   build_and_run:
     runs-on: ubuntu-latest
-    
-    # 🔐 CRITICAL FIX: Explicitly grant write permissions to the automation token
+
+    # Explicitly grant repository write permissions to update the history file
     permissions:
       contents: write
 
     steps:
     - name: Checkout Code Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
-        # Uses the default token with the write permissions specified above
-        token: ${{ secrets.GITHUB_TOKEN }} 
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set Up Python Environment
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
     - name: Install Runtime Dependencies
       run: |
-        pip install requests beautifulsoup4 pandas matplotlib
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
     - name: Execute Screener Scanner Core
       env:
@@ -42,7 +42,10 @@ jobs:
       run: |
         git config --global user.name 'GitHub Automation Bot'
         git config --global user.email 'actions@github.com'
+        
+        # Ensure the file exists before tracking it
         touch holdings_history.json
         git add holdings_history.json
-        git commit -m "Sync updated holding pattern tracking cache [skip ci]" || exit 0
-        git push
+        
+        # Only commit and push if the file contents actually changed to avoid execution loops
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Sync updated holding pattern tracking cache [skip ci]" && git push)
