@@ -7,6 +7,7 @@ import feedparser
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 import re
+from datetime import datetime
 
 def get_secret(key):
     val = os.environ.get(key)
@@ -53,8 +54,10 @@ if not os.path.exists(CHARTS_DIR):
 
 if os.path.exists(HISTORY_FILE) and os.path.getsize(HISTORY_FILE) > 0:
     with open(HISTORY_FILE, "r") as f:
-        try: historical_db = json.load(f)
-        except json.JSONDecodeError: historical_db = {}
+        try:
+            historical_db = json.load(f)
+        except json.JSONDecodeError:
+            historical_db = {}
 else:
     historical_db = {}
 
@@ -65,7 +68,8 @@ def get_screener_session():
         init_res = session.get(login_url, timeout=10)
         soup = BeautifulSoup(init_res.text, 'html.parser')
         csrf_token = soup.find('input', {'name': 'csrfmiddlewaretoken'})
-        if not csrf_token: return None
+        if not csrf_token:
+            return None
         payload = {
             'username': SCREENER_USERNAME,
             'password': SCREENER_PASSWORD,
@@ -102,8 +106,8 @@ def scan_screener_urls(session):
                 name = link_tag.text.strip()
                 cols = row.find_all('td')
                 try:
-                    price = cols[2].text.strip().replace(',', '') 
-                    market_cap = cols[1].text.strip().replace(',', '') # Extract Market Cap if present
+                    price = cols[2].text.strip().replace(',', '')
+                    market_cap = cols[1].text.strip().replace(',', '')
                 except:
                     price = "N/A"
                     market_cap = "N/A"
@@ -146,25 +150,31 @@ def parse_shareholding_metrics(session, company_url):
     if matches:
         order_book_val = f"₹{[''.join(x) for x in matches][0]} Cr"
 
-    # Capture absolute market cap figure if not caught in screen table
     mcap_element = soup.select_one("li:-markdown-conjoint(Market Cap) span.number")
     mcap_val = mcap_element.text.strip().replace(',', '') if mcap_element else "N/A"
 
     section = soup.find(id="shareholding")
-    if not section: return None
+    if not section:
+        return None
     table = section.find('table', class_='data-table')
-    if not table: return None
+    if not table:
+        return None
     
     headers = [th.text.strip() for th in table.find('thead').find_all('th')]
     latest_idx = len(headers) - 1
     
-    metrics = {'Promoters': 0.0, 'FIIs': 0.0, 'DIIs': 0.0, 'Public': 0.0, 'Top_Holders': [], 'Order_Book': order_book_val, 'Market_Cap_Value': mcap_val}
+    metrics = {
+        'Promoters': 0.0, 'FIIs': 0.0, 'DIIs': 0.0, 'Public': 0.0,
+        'Top_Holders': [], 'Order_Book': order_book_val, 'Market_Cap_Value': mcap_val
+    }
     tbody = table.find('tbody')
-    if not tbody: return None
+    if not tbody:
+        return None
     
     for row in tbody.find_all('tr'):
         cols = row.find_all('td')
-        if not cols: continue
+        if not cols:
+            continue
         row_classes = row.get('class', [])
         if 'sub' in row_classes:
             holder_name = cols[0].text.strip()
@@ -172,14 +182,16 @@ def parse_shareholding_metrics(session, company_url):
                 holder_val = cols[latest_idx].text.strip().replace('%', '')
                 if holder_val and float(holder_val) > 0.0:
                     metrics['Top_Holders'].append(f"{holder_name} ({holder_val}%)")
-            except: pass
+            except:
+                pass
         else:
             cat = cols[0].text.strip().replace('+', '').strip()
             if cat in metrics:
                 try:
                     val = cols[latest_idx].text.strip().replace('%', '')
                     metrics[cat] = float(val) if val else 0.0
-                except: pass
+                except:
+                    pass
                 
     return metrics
 
@@ -190,7 +202,6 @@ def fetch_moneycontrol_summaries(company_name):
         feed = feedparser.parse(query_url)
         for entry in feed.entries[:2]:
             title_clean = entry.title.split('-')[0].strip()
-            # Generate a brief actionable summary token out of title keyword flags
             summary_tag = "⚠️ Corporate Action"
             if any(x in title_clean.lower() for x in ['profit', 'rise', 'surge', 'jump', 'beats']):
                 summary_tag = "🚀 Strong Earnings Impact"
@@ -205,36 +216,26 @@ def fetch_moneycontrol_summaries(company_name):
     return "\n".join(news_items) if news_items else "• _No critical breaking updates detected_"
 
 def get_market_cap_category(mcap_str):
-    """Categorizes stock into Small, Mid, or High (Large) Caps based on Indian Market classification thresholds"""
     try:
         mcap = float(mcap_str.replace('₹', '').replace('Cr', '').strip())
-        if mcap < 5000: return "🔴 SMALL CAP"
-        elif 5000 <= mcap < 20000: return "🟡 MID CAP"
-        else: return "🟢 HIGH CAP (LARGE CAP)"
+        if mcap < 5000:
+            return "🔴 SMALL CAP"
+        elif 5000 <= mcap < 20000:
+            return "🟡 MID CAP"
+        else:
+            return "🟢 HIGH CAP (LARGE CAP)"
     except:
         return "⚪ CAP CATEGORY UNKNOWN"
 
 def generate_recommendation_rating(metrics, has_changed, dsij_tags):
-    """Generates an automated technical recommendation summary based on confluence indicators"""
     score = 0
-    reasons = []
-    
-    # 1. Institutional Check
     if metrics['FIIs'] > 0 or metrics['DIIs'] > 0:
         score += 1
-        reasons.append("Big Money Presence")
-        
-    # 2. DSIJ Cross-Match Confluence
     if dsij_tags:
         score += 2
-        reasons.append(f"Trending in DSIJ ({', '.join(dsij_tags[:2])})")
-        
-    # 3. Order Book Presence
     if metrics['Order_Book'] != "N/A":
         score += 1
-        reasons.append("Visible Order Book Runway")
 
-    # Final Decision Mapping
     if score >= 3:
         return "🔥 STRONG BUY (High Conviction Confluence)"
     elif score == 2:
@@ -250,14 +251,15 @@ def generate_donut_chart(stock_name, metrics):
     colors = ['#1f77b4', '#2ca02c', '#bcbd22', '#ff7f0e']
     
     fig, ax = plt.subplots(figsize=(6, 6))
-    ax.pie(filtered_sizes, labels=filtered_labels, autopct='%1.2f%%', startangle=90, colors=colors[:len(filtered_sizes)], pctdistance=0.75)
-    centre_circle = plt.Circle((0,0), 0.50, fc='white')
+    ax.pie(filtered_sizes, labels=filtered_labels, autopct='%1.2f%%', startangle=90,
+           colors=colors[:len(filtered_sizes)], pctdistance=0.75)
+    centre_circle = plt.Circle((0, 0), 0.50, fc='white')
     fig.gca().add_artist(centre_circle)
-    ax.axis('equal')  
+    ax.axis('equal')
     plt.title(f"Shareholding Pattern - {stock_name}\n(Latest Quarter Overview)", fontsize=14, fontweight='bold', pad=20)
     plt.tight_layout()
     
-    safe_filename = "".join([c for c in stock_name if c.isalpha() or c.isdigit() or c==' ']).rstrip()
+    safe_filename = "".join([c for c in stock_name if c.isalpha() or c.isdigit() or c == ' ']).rstrip()
     local_path = os.path.join(CHARTS_DIR, f"{safe_filename.replace(' ', '_')}_shareholding.png")
     plt.savefig(local_path, format='png', dpi=150)
     
@@ -269,7 +271,8 @@ def generate_donut_chart(stock_name, metrics):
 
 def calculate_delta_signals(stock_name, current_metrics):
     past = historical_db.get(stock_name, {})
-    if not past: return "🆕 *Added to Tracking Watchlist*", True
+    if not past:
+        return "🆕 *Added to Tracking Watchlist*", True
     updates, has_changed = [], False
     for key in ['Promoters', 'FIIs', 'DIIs', 'Public']:
         old_val = past.get(key, 0.0)
@@ -286,23 +289,29 @@ def calculate_delta_signals(stock_name, current_metrics):
     return "\n".join(updates), has_changed
 
 def broadcast_telegram_visual_payload(msg, image_buffer):
-    if not TELEGRAM_TOKEN or not MY_CHAT_ID: return
+    if not TELEGRAM_TOKEN or not MY_CHAT_ID:
+        return
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto"
     image_buffer.seek(0)
     files = {'photo': ('shareholding.png', image_buffer.read(), 'image/png')}
     payload = {'chat_id': MY_CHAT_ID, 'caption': msg, 'parse_mode': 'Markdown'}
-    try: requests.post(url, data=payload, files=files, timeout=15)
-    except Exception as e: print(f"Telegram Err: {e}")
+    try:
+        requests.post(url, data=payload, files=files, timeout=15)
+    except Exception as e:
+        print(f"Telegram Err: {e}")
 
 def broadcast_discord_payload(msg, image_buffer):
-    if not DISCORD_WEBHOOK_URL: return
+    if not DISCORD_WEBHOOK_URL:
+        return
     image_buffer.seek(0)
     payload = {"content": msg}
     files = {"file": ("shareholding.png", image_buffer.read(), "image/png")}
-    try: requests.post(DISCORD_WEBHOOK_URL, data=payload, files=files, timeout=15)
-    except Exception as e: print(f"Discord Err: {e}")
+    try:
+        requests.post(DISCORD_WEBHOOK_URL, data=payload, files=files, timeout=15)
+    except Exception as e:
+        print(f"Discord Err: {e}")
 
-            def main():
+def main():
     # ========== TEMPORARY FORCED TEST ==========
     print("🔄 Starting forced Telegram test...")
     
@@ -313,10 +322,9 @@ def broadcast_discord_payload(msg, image_buffer):
     test_msg = (
         "✅ *Screener Bot Test Successful!*\n\n"
         "Your Token and Chat ID are working correctly.\n"
-        f"Time: {__import__('datetime').datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
     )
     
-    # Send a simple text message first
     try:
         res = requests.post(
             f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
@@ -341,7 +349,7 @@ def broadcast_discord_payload(msg, image_buffer):
 
     screener_session = get_screener_session()
     dsij_session = get_dsij_session()
-    if not screener_session: 
+    if not screener_session:
         print("❌ Screener login failed")
         return
 
@@ -351,8 +359,9 @@ def broadcast_discord_payload(msg, image_buffer):
     for name, details in active_screener_matches.items():
         try:
             metrics = parse_shareholding_metrics(screener_session, details['url'])
-            if not metrics: continue
-        except Exception as e: 
+            if not metrics:
+                continue
+        except Exception:
             continue
         
         delta_report_string, has_changed = calculate_delta_signals(name, metrics)
@@ -394,3 +403,6 @@ def broadcast_discord_payload(msg, image_buffer):
 
     with open(HISTORY_FILE, "w") as f:
         json.dump(historical_db, f, indent=4)
+
+if __name__ == "__main__":
+    main()
