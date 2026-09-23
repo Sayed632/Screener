@@ -302,10 +302,48 @@ def broadcast_discord_payload(msg, image_buffer):
     try: requests.post(DISCORD_WEBHOOK_URL, data=payload, files=files, timeout=15)
     except Exception as e: print(f"Discord Err: {e}")
 
-def main():
+            def main():
+    # ========== TEMPORARY FORCED TEST ==========
+    print("🔄 Starting forced Telegram test...")
+    
+    if not TELEGRAM_TOKEN or not MY_CHAT_ID:
+        print("❌ TELEGRAM_TOKEN or MY_CHAT_ID is missing!")
+        return
+    
+    test_msg = (
+        "✅ *Screener Bot Test Successful!*\n\n"
+        "Your Token and Chat ID are working correctly.\n"
+        f"Time: {__import__('datetime').datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    )
+    
+    # Send a simple text message first
+    try:
+        res = requests.post(
+            f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
+            data={
+                "chat_id": MY_CHAT_ID,
+                "text": test_msg,
+                "parse_mode": "Markdown"
+            },
+            timeout=15
+        )
+        print(f"Telegram response: {res.status_code} - {res.text}")
+        
+        if res.status_code == 200:
+            print("✅ Test message sent successfully!")
+        else:
+            print("❌ Failed to send test message")
+    except Exception as e:
+        print(f"❌ Telegram Error: {e}")
+    
+    print("🔄 Forced test completed. Now running normal scan...")
+    # ========== END OF FORCED TEST ==========
+
     screener_session = get_screener_session()
     dsij_session = get_dsij_session()
-    if not screener_session: return
+    if not screener_session: 
+        print("❌ Screener login failed")
+        return
 
     dsij_insights_db = fetch_dsij_insights(dsij_session)
     active_screener_matches = scan_screener_urls(screener_session)
@@ -314,7 +352,8 @@ def main():
         try:
             metrics = parse_shareholding_metrics(screener_session, details['url'])
             if not metrics: continue
-        except Exception as e: continue
+        except Exception as e: 
+            continue
         
         delta_report_string, has_changed = calculate_delta_signals(name, metrics)
         mc_news_summaries = fetch_moneycontrol_summaries(name)
@@ -327,7 +366,6 @@ def main():
         dsij_tag_str = ", ".join(set(matched_dsij_tags)) if matched_dsij_tags else "None detected"
         holders = ", ".join(metrics['Top_Holders'][:2]) if metrics['Top_Holders'] else "None declared"
         
-        # 📌 New Processing Layers: Classification & Strategy Rating
         cap_category = get_market_cap_category(metrics.get('Market_Cap_Value', '0'))
         recommendation = generate_recommendation_rating(metrics, has_changed, list(set(matched_dsij_tags)))
         
@@ -356,6 +394,3 @@ def main():
 
     with open(HISTORY_FILE, "w") as f:
         json.dump(historical_db, f, indent=4)
-
-if __name__ == "__main__":
-    main()
