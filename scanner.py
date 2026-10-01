@@ -31,9 +31,13 @@ if not all([SCREENER_USERNAME, SCREENER_PASSWORD]):
     print("❌ Critical Screener secret resolution failed.")
     exit(1)
 
+# ========== YOUR 5 NEW GURU SCREENS ==========
 SCREENER_URLS = [
-    "https://www.screener.in/screens/3708883/small-stocks/",
-    "https://www.screener.in/screens/3708803/big-money-inflow/"
+    "https://www.screener.in/screens/4000817/high-piotroski-score/",
+    "https://www.screener.in/screens/4000836/magic-formula-greenblatt/",
+    "https://www.screener.in/screens/4000848/darvas-scan/",
+    "https://www.screener.in/screens/4003190/jim-slater-zulu/",
+    "https://www.screener.in/screens/4004103/richard-driehaus-momentum-screen/"
 ]
 
 DSIJ_TARGET_URLS = {
@@ -98,24 +102,29 @@ def get_dsij_session():
 def scan_screener_urls(session):
     all_stocks = {}
     for url in SCREENER_URLS:
-        res = session.get(url, timeout=10)
-        soup = BeautifulSoup(res.text, 'html.parser')
-        for row in soup.select("table.data-table tbody tr"):
-            link_tag = row.select_one("td a")
-            if link_tag and '/company/' in link_tag['href']:
-                name = link_tag.text.strip()
-                cols = row.find_all('td')
-                try:
-                    price = cols[2].text.strip().replace(',', '')
-                    market_cap = cols[1].text.strip().replace(',', '')
-                except:
-                    price = "N/A"
-                    market_cap = "N/A"
-                all_stocks[name] = {
-                    'url': f"https://www.screener.in{link_tag['href']}",
-                    'price': price,
-                    'market_cap': market_cap
-                }
+        print(f"🔍 Scanning: {url}")
+        try:
+            res = session.get(url, timeout=15)
+            soup = BeautifulSoup(res.text, 'html.parser')
+            for row in soup.select("table.data-table tbody tr"):
+                link_tag = row.select_one("td a")
+                if link_tag and '/company/' in link_tag.get('href', ''):
+                    name = link_tag.text.strip()
+                    cols = row.find_all('td')
+                    try:
+                        price = cols[2].text.strip().replace(',', '')
+                        market_cap = cols[3].text.strip().replace(',', '') if len(cols) > 3 else "N/A"
+                    except:
+                        price = "N/A"
+                        market_cap = "N/A"
+                    all_stocks[name] = {
+                        'url': f"https://www.screener.in{link_tag['href']}",
+                        'price': price,
+                        'market_cap': market_cap
+                    }
+        except Exception as e:
+            print(f"⚠️ Error scanning {url}: {e}")
+    print(f"✅ Total unique stocks found: {len(all_stocks)}")
     return all_stocks
 
 def fetch_dsij_insights(session):
@@ -312,7 +321,7 @@ def broadcast_discord_payload(msg, image_buffer):
         print(f"Discord Err: {e}")
 
 def main():
-    # ========== TEMPORARY FORCED TEST ==========
+    # ========== FORCED TELEGRAM TEST ==========
     print("🔄 Starting forced Telegram test...")
     
     if not TELEGRAM_TOKEN or not MY_CHAT_ID:
@@ -320,8 +329,9 @@ def main():
         return
     
     test_msg = (
-        "✅ *Screener Bot Test Successful!*\n\n"
-        "Your Token and Chat ID are working correctly.\n"
+        "✅ *Guru Screener Bot is Live!*\n\n"
+        "Token & Chat ID working correctly.\n"
+        f"Screens: 5 Guru Screens active\n"
         f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
     )
     
@@ -403,6 +413,8 @@ def main():
 
     with open(HISTORY_FILE, "w") as f:
         json.dump(historical_db, f, indent=4)
+
+    print("✅ Full scan completed")
 
 if __name__ == "__main__":
     main()
