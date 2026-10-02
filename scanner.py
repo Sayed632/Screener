@@ -31,13 +31,14 @@ if not all([SCREENER_USERNAME, SCREENER_PASSWORD]):
     print("❌ Critical Screener secret resolution failed.")
     exit(1)
 
-# ========== YOUR 5 NEW GURU SCREENS ==========
+# ========== YOUR 6 GURU SCREENS ==========
 SCREENER_URLS = [
     "https://www.screener.in/screens/4000817/high-piotroski-score/",
     "https://www.screener.in/screens/4000836/magic-formula-greenblatt/",
     "https://www.screener.in/screens/4000848/darvas-scan/",
     "https://www.screener.in/screens/4003190/jim-slater-zulu/",
-    "https://www.screener.in/screens/4004103/richard-driehaus-momentum-screen/"
+    "https://www.screener.in/screens/4004103/richard-driehaus-momentum-screen/",
+    "https://www.screener.in/screens/4005994/altman-z-score/"
 ]
 
 DSIJ_TARGET_URLS = {
@@ -321,18 +322,25 @@ def broadcast_discord_payload(msg, image_buffer):
         print(f"Discord Err: {e}")
 
 def main():
-    # ========== FORCED TELEGRAM TEST ==========
-    print("🔄 Starting forced Telegram test...")
+    # ========== HEARTBEAT TEST ==========
+    print("🔄 Starting Heartbeat Test...")
     
     if not TELEGRAM_TOKEN or not MY_CHAT_ID:
         print("❌ TELEGRAM_TOKEN or MY_CHAT_ID is missing!")
         return
     
-    test_msg = (
-        "✅ *Guru Screener Bot is Live!*\n\n"
-        "Token & Chat ID working correctly.\n"
-        f"Screens: 5 Guru Screens active\n"
-        f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    heartbeat_msg = (
+        "❤️ *Guru Screener Bot Heartbeat*\n\n"
+        "✅ Setup is working correctly!\n"
+        f"📅 Time: `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`\n"
+        f"📊 Screens Active: *6*\n"
+        "• High Piotroski Score\n"
+        "• Magic Formula Greenblatt\n"
+        "• Darvas Scan\n"
+        "• Jim Slater Zulu\n"
+        "• Richard Driehaus Momentum\n"
+        "• Altman Z Score > 3\n\n"
+        "Bot is ready and monitoring stocks."
     )
     
     try:
@@ -340,22 +348,23 @@ def main():
             f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
             data={
                 "chat_id": MY_CHAT_ID,
-                "text": test_msg,
+                "text": heartbeat_msg,
                 "parse_mode": "Markdown"
             },
             timeout=15
         )
-        print(f"Telegram response: {res.status_code} - {res.text}")
+        print(f"Telegram response: {res.status_code}")
         
         if res.status_code == 200:
-            print("✅ Test message sent successfully!")
+            print("✅ Heartbeat message sent successfully!")
         else:
-            print("❌ Failed to send test message")
+            print("❌ Failed to send heartbeat message")
+            print(res.text)
     except Exception as e:
         print(f"❌ Telegram Error: {e}")
     
-    print("🔄 Forced test completed. Now running normal scan...")
-    # ========== END OF FORCED TEST ==========
+    print("🔄 Heartbeat test completed. Starting full scan...")
+    # ========== END OF HEARTBEAT ==========
 
     screener_session = get_screener_session()
     dsij_session = get_dsij_session()
