@@ -4,3 +4,7 @@ pandas
 feedparser
 matplotlib
 lxml
+requests
+yfinance
+pandas
+pytz
