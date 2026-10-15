@@ -17,7 +17,7 @@ if not all([SCREENER_USERNAME, SCREENER_PASSWORD]):
     print("❌ Critical Screener secrets missing")
     exit(1)
 
-# ========== 9 SCREENS ==========
+# ========== 10 SCREENS ==========
 SCREENER_URLS = {
     "High Piotroski": "https://www.screener.in/screens/4000817/high-piotroski-score/",
     "Magic Formula": "https://www.screener.in/screens/4000836/magic-formula-greenblatt/",
@@ -27,7 +27,8 @@ SCREENER_URLS = {
     "Altman Z Score": "https://www.screener.in/screens/4005994/altman-z-score/",
     "Crash Recovery": "https://www.screener.in/screens/4009908/crash-recovery-screener/",
     "Quality 40-80": "https://www.screener.in/screens/2062976/penny-stocks/",
-    "Swing Pick": "https://www.screener.in/screens/4026023/swing-pick/"
+    "Swing Pick": "https://www.screener.in/screens/4026023/swing-pick/",
+    "High FII + Promoter": "https://www.screener.in/screens/4033828/high-fii-promoter/"
 }
 
 def get_screener_session():
@@ -141,6 +142,8 @@ def is_high_priority(screens):
         return True
     if "Swing Pick" in screens:
         return True
+    if "High FII + Promoter" in screens:
+        return True
     if "Quality 40-80" in screens and len(screens) >= 2:
         return True
     return False
@@ -151,11 +154,12 @@ def main():
     heartbeat = (
         "❤️ *Guru Screener Bot*\n\n"
         f"✅ Running at `{datetime.now().strftime('%Y-%m-%d %H:%M')}`\n"
-        "📊 9 Screens Active\n"
+        "📊 10 Screens Active\n"
         "• High Piotroski  • Magic Formula\n"
         "• Darvas  • Zulu  • Driehaus\n"
         "• Altman Z  • Crash Recovery\n"
-        "• Quality 40-80  • Swing Pick\n\n"
+        "• Quality 40-80  • Swing Pick\n"
+        "• High FII + Promoter\n\n"
         "🔔 Telegram: High-priority stocks only\n"
         "📈 Full list → Streamlit Dashboard"
     )
@@ -220,6 +224,8 @@ def main():
             tags.append("🚀 Recovery")
         if "Swing Pick" in data["screens"]:
             tags.append("📈 Swing")
+        if "High FII + Promoter" in data["screens"]:
+            tags.append("🏛 High FII + Promoter")
         if "Quality 40-80" in data["screens"]:
             tags.append("💎 40-80")
         if len(data["screens"]) >= 3:
@@ -229,8 +235,10 @@ def main():
         elif sentiment == "Negative":
             tags.append("⚠️ News-")
 
-        # Clear heading for Swing Pick
-        if "Swing Pick" in data["screens"]:
+        # Special heading
+        if "High FII + Promoter" in data["screens"]:
+            heading = "🏛 *HIGH FII + PROMOTER*"
+        elif "Swing Pick" in data["screens"]:
             heading = "📈 *SWING PICK*"
         else:
             heading = f"📌 *High Priority #{sent}*"
